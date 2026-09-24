@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-09-18T12:45:40.884987+00:00",
+  "environment": "production",
+  "credentials_present": true,
+  "public_api_reachable": true,
+  "signed_account_read_verified": true,
+  "api_key_permissions_verified": true,
+  "stock_etf_access_verified": true,
+  "orders_allowed": false,
+  "errors": [],
+  "scope": "stocks",
+  "stock_rules_read_verified": true,
+  "stock_quote_read_verified": true,
+  "stock_orders_read_verified": true,
+  "quote_freshness_verified": true,
+  "stock_symbol": "AAPL",
+  "stock_rules": {
+    "symbol": "AAPL",
+    "tradability": "BUY_SELL",
+    "fractionable": true,
+    "fractionableEh": true,
+    "stepSize": "0.000000001",
+    "minQty": null,
+    "minNotional": "5.00000000",
+    "maxNotional": "1000000.00000000"
+  },
+  "quote": {
+    "symbol": "AAPL",
+    "bidPrice": "336.95",
+    "askPrice": "337.1"
+  },
+  "quote_received_at": "2026-09-18T12:45:41.476394+00:00",
+  "key_permissions": {
+    "ipRestrict": false,
+    "enableReading": true,
+    "enableSpotAndMarginTrading": false,
+    "enableWithdrawals": false
+  }
+}

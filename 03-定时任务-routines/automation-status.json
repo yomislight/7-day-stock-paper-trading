@@ -1,36 +1,92 @@
 {
-  "status": "gpt_heartbeat_active_local_paper_engine_enabled_github_hosted_runner_blocked_http_451",
-  "name": "7-day paper trading observation",
-  "requested_initial_status": "ACTIVE",
+  "status": "round_2_gpt_heartbeats_active_local_fallback_waiting_for_macos_privacy_permission",
   "project_path": "/Users/a123/Desktop/7天股票交易实验",
-  "repository_layout": "numbered_chinese_categories",
-  "repository_layout_updated_on": "2026-09-16",
   "timezone": "America/Chicago",
+  "experiment_round": 2,
   "planned_checks": 42,
-  "recurrence_validated_offline": true,
-  "scheduler_execution_verified": true,
-  "repository": "yomislight/7-day-stock-paper-trading",
-  "first_github_run_id": "34930058749",
-  "reason": "GitHub Actions accepted and executed the workflow, but the hosted runner received HTTP 451 from Binance public endpoints. A supported-region self-hosted runner or VPS is required for Binance connectivity.",
-  "activation_blockers": ["GitHub-hosted runner receives HTTP 451 from Binance; use the local GPT heartbeat for the experiment"],
-  "gpt_mobile_heartbeat": {
+  "planned_trading_dates": [
+    "2026-09-24",
+    "2026-09-25",
+    "2026-09-28",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02"
+  ],
+  "gpt_mobile_heartbeats": [
+    {
+      "automation_id": "7-0745",
+      "slot": "pre_market_0745_ct",
+      "central_time": "07:45",
+      "status": "ACTIVE"
+    },
+    {
+      "automation_id": "7-0835",
+      "slot": "open_review_0835_ct",
+      "central_time": "08:35",
+      "status": "ACTIVE"
+    },
+    {
+      "automation_id": "7-1100",
+      "slot": "late_morning_1100_ct",
+      "central_time": "11:00",
+      "status": "ACTIVE"
+    },
+    {
+      "automation_id": "7-1300",
+      "slot": "midday_1300_ct",
+      "central_time": "13:00",
+      "status": "ACTIVE"
+    },
+    {
+      "automation_id": "7-1415",
+      "slot": "flatten_prep_1415_ct",
+      "central_time": "14:15",
+      "status": "ACTIVE"
+    },
+    {
+      "automation_id": "7-1445",
+      "slot": "end_of_day_1445_ct",
+      "central_time": "14:45",
+      "status": "ACTIVE"
+    }
+  ],
+  "replaced_automation": {
     "automation_id": "7",
-    "name": "7天股票实验 六时段手机报告",
-    "status": "ACTIVE",
-    "target": "current_gpt_thread",
-    "schedule_type": "42_explicit_utc_occurrences",
-    "scheduled_occurrences": 42,
-    "planned_trading_dates": [
-      "2026-09-15",
-      "2026-09-16",
-      "2026-09-17",
-      "2026-09-18",
-      "2026-09-21",
-      "2026-09-22",
-      "2026-09-23"
-    ],
-    "central_times": ["07:45", "08:35", "11:00", "13:00", "14:15", "14:45"],
-    "delivery_note": "Reports are posted to the current GPT thread. Mobile push display requires the same account and enabled ChatGPT/Codex mobile notifications."
+    "status": "DELETED",
+    "reason": "The first-round combined 42-occurrence task was replaced by six independent slot tasks."
   },
-  "rebase_dates_if_start_delayed": true
+  "local_read_only_fallback": {
+    "label": "com.yomi.seven-day-trading-observer",
+    "interval_seconds": 300,
+    "plist_installed": true,
+    "status": "PAUSED_BY_MACOS_PRIVACY",
+    "last_validation_at": "2026-09-24T02:12:27Z",
+    "last_exit_code": 2,
+    "blocker": "A background Python process cannot read the Desktop project until macOS Full Disk Access or an equivalent Files and Folders permission is granted.",
+    "safe_behavior": "The fallback was unloaded after the permission error so it does not create repeated failures."
+  },
+  "supplemental_market_data": {
+    "provider": "yahoo_finance_public_chart",
+    "credentials_required": false,
+    "last_validation_at": "2026-09-24T02:44:50Z",
+    "connectivity_verified": true,
+    "historical_price_volume_verified": true,
+    "market_data_ready": false,
+    "current_reason": "The check ran after the regular session, so the latest five-minute bars were correctly rejected as stale. It will be checked again during each scheduled run.",
+    "runtime_policy": "Paper research only. Any missing, stale, or changed response blocks new positions but never blocks risk reduction."
+  },
+  "keep_awake": {
+    "label": "com.yomi.seven-day-trading-awake",
+    "status": "ACTIVE",
+    "display_may_sleep": true,
+    "idle_system_sleep_prevented": true,
+    "system_sleep_prevented_while_on_ac_power": true
+  },
+  "github_actions": {
+    "repository": "yomislight/7-day-stock-paper-trading",
+    "status": "hosted_runner_blocked_http_451",
+    "role": "tests_and_audit_only_until_a_supported_region_self_hosted_runner_is_available"
+  },
+  "delivery_note": "Each scheduled GPT task posts a Chinese report to the current thread. Mobile display requires the same account and enabled app notifications."
 }

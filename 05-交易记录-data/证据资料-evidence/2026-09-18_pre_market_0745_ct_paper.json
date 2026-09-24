@@ -1,0 +1,71 @@
+{
+  "run_id": "2026-09-18_pre_market_0745_ct_paper",
+  "timestamp": "2026-09-18T12:46:42.956828+00:00",
+  "mode": "local_paper_only",
+  "live_order_sent": false,
+  "decision": {
+    "paper_trading_only": true,
+    "action": "no_trade",
+    "symbol": "AAPL",
+    "reason_zh": "07:45 Central 是盘前研究时段，日程明确禁止下单。美股期货延续前一日反弹但涨幅温和，欧洲股市走弱，日本央行加息至 1.25%；08:15 Central 还有美国工业生产数据，开盘时还有美联储官员讲话。正常交易时段的成交量、VWAP、市场宽度和价格延续尚未确认，因此保持空仓。",
+    "data_gap_zh": "Binance 股票只读接口和 AAPL 报价已验证，但目前只有盘前单点报价，没有正常交易时段成交量、VWAP、指数市场宽度，也没有工业生产数据发布后的市场反应。",
+    "thesis": "Pre-market observation only. U.S. futures are modestly higher after Thursday's rally, but global signals are mixed and U.S. industrial production plus a Fed speech remain ahead. Wait for regular-session confirmation.",
+    "watchlist": [
+      "SPY",
+      "QQQ",
+      "DIA",
+      "IWM",
+      "AAPL",
+      "NVDA",
+      "XOM",
+      "JPM"
+    ],
+    "evidence": [
+      {
+        "category": "market_context",
+        "source": "https://apnews.com/article/1ff3311788bcc4555d00e283a57289fe",
+        "note_zh": "道指和标普500期货盘前约上涨 0.2% 和 0.3%；亚洲多数上涨、欧洲主要指数走弱，日本央行加息至 1.25%。"
+      },
+      {
+        "category": "macro_calendar",
+        "source": "https://www.federalreserve.gov/newsevents/2026-september.htm",
+        "note_zh": "美联储工业生产与产能利用率数据计划在 09:15 Eastern 发布，Bowman 于 09:30 Eastern 发表压力测试讲话。"
+      },
+      {
+        "category": "broker_read_only",
+        "source": "05-交易记录-data/证据资料-evidence/2026-09-18_pre_market_0745_ct.json",
+        "note_zh": "Binance 股票只读接口、权限、股票资格、订单读取和 AAPL 报价新鲜度检查均通过；真实交易权限关闭。"
+      }
+    ]
+  },
+  "result": {
+    "status": "no_trade",
+    "event": null,
+    "snapshot": {
+      "rules": {
+        "symbol": "AAPL",
+        "tradability": "BUY_SELL",
+        "fractionable": true,
+        "stepSize": "0.000000001",
+        "minQty": null,
+        "maxQty": "1000000.000000000",
+        "minNotional": "5.00000000",
+        "maxNotional": "1000000.00000000"
+      },
+      "quote": {
+        "symbol": "AAPL",
+        "bid": "337",
+        "ask": "337.12",
+        "bid_size": "400",
+        "ask_size": "80",
+        "received_at": "2026-09-18T12:46:43.773399+00:00"
+      }
+    }
+  },
+  "state": {
+    "cash_usdt": 10000,
+    "equity_usdt": 10000,
+    "positions": [],
+    "daily_open_risk_usdt": 0
+  }
+}

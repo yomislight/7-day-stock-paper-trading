@@ -16,7 +16,7 @@ Every scheduled task must begin by reading:
 - `03-定时任务-routines/CONTINUITY.zh-CN.md`
 - `04-运行状态-state/readiness.json`
 - `05-交易记录-data/current-state.json`
-- Latest `05-交易记录-data/journal/` record, if present
+- Latest `05-交易记录-data/运行日志-journal/` record, if present
 
 Before any trade decision, check:
 
@@ -25,16 +25,26 @@ Before any trade decision, check:
 - Broker/API status is read-only or explicitly verified for paper trading.
 - Position size, daily loss, and single-trade loss limits are present.
 - No unfinished previous run requires reconciliation.
+- A fresh keyless public five-minute volume and derived-VWAP check exists before opening a new paper position; its limitations are recorded and Binance supplies the simulated executable quote.
 
 If any item is missing, malformed, stale, contradictory, or unsafe, switch to observation only.
+
+The local launchd observer may already have completed the read-only slot before the GPT task wakes. A
+`duplicate_skipped` result is acceptable in that case; continue from the existing evidence and still
+write the paper decision, journal and Chinese report. It is not acceptable to skip the whole task.
 
 ## End-of-Run Sequence
 
 Every scheduled task must update:
 
 - `05-交易记录-data/current-state.json`
-- The current trading day's journal file in `05-交易记录-data/journal/`
-- Evidence notes in `05-交易记录-data/evidence/`
+- The current trading day's journal file in `05-交易记录-data/运行日志-journal/`
+- Evidence notes in `05-交易记录-data/证据资料-evidence/`
+- The current day's fully Chinese summary in `09-每日中文报告-daily-reports/`
+
+The Chinese report must explicitly state why the system bought or did not buy, why it sold or did not sell, which tasks were missing or delayed, any data gaps, the daily review, and proposed joint revisions. Deliberate no-trade decisions and failed execution must be recorded separately.
+
+The end-of-day Chinese report must also analyze the broad U.S. market: major indexes, rates and oil, primary drivers, sector or style structure, implications for that day's decisions, next-session risks, and clickable source links.
 
 ## Required Journal Content
 

@@ -4,8 +4,8 @@ This project keeps Binance credentials local and uses the API in read-only mode 
 
 ## Files
 
-- `09-API密钥-仅本地/binance-api.env`: dedicated local Binance API credential file. This file is ignored by git.
-- `09-API密钥-仅本地/binance-api.env.example`: safe Binance API template without secrets.
+- `10-API密钥-仅本地-local-secrets/binance-api.env`: dedicated local Binance API credential file. This file is ignored by git.
+- `10-API密钥-仅本地-local-secrets/binance-api.env.example`: safe Binance API template without secrets.
 - `.env`: general local safety switches. This file is ignored by git.
 - `.env.example`: safe general template without secrets.
 - `06-程序脚本-scripts/binance_readiness_check.py`: read-only verification script.
@@ -13,7 +13,7 @@ This project keeps Binance credentials local and uses the API in read-only mode 
 
 ## Configure Credentials
 
-1. Open `09-API密钥-仅本地/binance-api.env` locally.
+1. Open `10-API密钥-仅本地-local-secrets/binance-api.env` locally.
 2. Fill `BINANCE_API_KEY` and `BINANCE_API_SECRET`.
 3. Keep these values unchanged unless there is a specific reason:
 

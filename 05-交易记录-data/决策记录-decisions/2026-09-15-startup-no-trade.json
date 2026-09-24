@@ -1,0 +1,17 @@
+{
+  "paper_trading_only": true,
+  "action": "no_trade",
+  "symbol": "AAPL",
+  "reason_zh": "系统启动核对发生在允许的新开仓时间之外。此时只能验证状态，不能提前编造正式交易机会。",
+  "thesis": "Startup validation occurs outside the permitted new-entry window. The system must not invent an entry before the scheduled U.S. market checks.",
+  "evidence": [
+    {
+      "category": "market_session",
+      "source": "03-定时任务-routines/schedule.json"
+    },
+    {
+      "category": "risk_control",
+      "source": "04-运行状态-state/paper-config.json"
+    }
+  ]
+}

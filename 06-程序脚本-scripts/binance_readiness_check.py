@@ -15,7 +15,7 @@ from urllib.parse import urlencode
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "09-API密钥-仅本地" / "binance-api.env"
+CONFIG = ROOT / "10-API密钥-仅本地-local-secrets" / "binance-api.env"
 HOSTS = {
     "production": "https://api.binance.com",
     "testnet": "https://testnet.binance.vision",
@@ -105,7 +105,7 @@ def check(config, public_only=False):
     result["public_api_reachable"] = ping == {} and time_valid
     if not public_only:
         if not key or not secret:
-            result["errors"].append("Fill both credentials in 09-API密钥-仅本地/binance-api.env locally")
+            result["errors"].append("Fill both credentials in 10-API密钥-仅本地-local-secrets/binance-api.env locally")
         elif result["public_api_reachable"]:
             query = urlencode({"timestamp": stamp, "recvWindow": 5000})
             signature = hmac.new(secret.encode(), query.encode(), hashlib.sha256).hexdigest()
@@ -200,6 +200,7 @@ def update_readiness(result):
     state["binance_stocks_api" if result.get("scope") == "stocks" else "binance_spot_api"] = result
     if result.get("scope") == "stocks":
         state["binance_stock_api_read_access_verified"] = result.get("stock_etf_access_verified", False)
+        state["last_readiness_check"] = result.get("checked_at")
     state["orders_allowed"] = False
     temporary = None
     try:

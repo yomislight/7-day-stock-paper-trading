@@ -17,7 +17,8 @@
 - 目标平台：Binance 股票/ETF交易能力。
 - 使用任何执行路径前，必须先验证 Binance 账户权限、地区资格、API 支持，以及是否存在 paper/sandbox 能力。
 - 如果 Binance 不提供股票/ETF paper trading，则使用本项目的本地 paper ledger 进行模拟记录。
-- Binance API key 统一保存在项目根目录的 `09-API密钥-仅本地/binance-api.env`，只读检查脚本只读取此文件。不要要求用户把密钥粘贴到聊天窗口；分享项目时使用 `09-API密钥-仅本地/binance-api.env.example`，不要分享已填写的凭证文件。
+- Binance API key 统一保存在项目根目录的 `10-API密钥-仅本地-local-secrets/binance-api.env`，只读检查脚本只读取此文件。不要要求用户把密钥粘贴到聊天窗口；分享项目时使用 `10-API密钥-仅本地-local-secrets/binance-api.env.example`，不要分享已填写的凭证文件。
+- Binance 用于股票规则和最终可执行报价；无密钥公共图表源只为 paper research 补充五分钟 K 线、成交量背景与推导 VWAP。补充数据缺失、过期或不完整时禁止新开模拟仓位，但不得因此阻止止损或减险。公共图表数据不得描述成官方 SIP 全市场合并数据。
 
 ## 允许做的事
 
@@ -51,15 +52,16 @@
 - `03-定时任务-routines/CONTINUITY.zh-CN.md`
 - `04-运行状态-state/readiness.json`
 - `05-交易记录-data/current-state.json`
-- `05-交易记录-data/journal/` 中最新记录，如果存在
+- `05-交易记录-data/运行日志-journal/` 中最新记录，如果存在
 
 ## 每次结束必须更新
 
 每个定时任务结束时必须更新：
 
 - `05-交易记录-data/current-state.json`
-- `05-交易记录-data/journal/` 中当天交易日志
-- `05-交易记录-data/evidence/` 中的证据说明
+- `05-交易记录-data/运行日志-journal/` 中当天交易日志
+- `05-交易记录-data/证据资料-evidence/` 中的证据说明
+- `09-每日中文报告-daily-reports/` 中当天的中文交易日报
 
 每条日志必须写清：
 
@@ -79,4 +81,4 @@
 - 股票接口映射见 `02-项目文档-docs/BINANCE-API.zh-CN.md` 及英文版。默认检查 `/sapi/v1/equity/`，不通过 Spot 交易对猜测股票能力。
 - `06-程序脚本-scripts/run_observation.py` 只读。`06-程序脚本-scripts/paper_engine.py` 只可模拟本地纸面成交，不包含任何券商 POST 路径。
 - 本地纸面规则强制：同时一个仓位、单仓 10%、单笔计划风险 0.5%、至少两类证据、净风险收益比至少 1.5、Central 11:30 后不开新仓、禁止隔夜。
-- 中英文均保留。日程日期在认证与审阅通过前仅为预备安排，配置日不计入实验交易日。
+- 中英文均保留。第二轮日期以中英文 schedule 为准；配置日、手动检查、漏跑时点和事后补写报告都不能计为已完成交易日。

@@ -1,18 +1,19 @@
 {
   "experiment_name": "7-day Binance stock/ETF paper trading experiment",
+  "experiment_round": 2,
   "mode": "paper_trading_only",
-  "start_date": "2026-09-15",
-  "end_date": "2026-09-23",
+  "start_date": "2026-09-24",
+  "end_date": "2026-10-02",
   "planned_trading_dates": [
-    "2026-09-15",
-    "2026-09-16",
-    "2026-09-17",
-    "2026-09-18",
-    "2026-09-21",
-    "2026-09-22",
-    "2026-09-23"
+    "2026-09-24",
+    "2026-09-25",
+    "2026-09-28",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02"
   ],
-  "trading_day_index": 1,
+  "trading_day_index": 0,
   "starting_capital_usdt": 10000,
   "cash_usdt": 10000,
   "equity_usdt": 10000,
@@ -20,6 +21,7 @@
   "unrealized_pnl_usdt": 0,
   "daily_realized_pnl_usdt": 0,
   "daily_open_risk_usdt": 0,
+  "risk_date": null,
   "positions": [],
   "open_orders": [],
   "watchlist": [
@@ -27,31 +29,37 @@
     "QQQ",
     "DIA",
     "IWM",
-    "VOO",
-    "IVV",
     "AAPL",
-    "MSFT",
     "NVDA",
-    "AMZN",
-    "META",
-    "GOOGL",
-    "TSLA",
-    "JPM",
     "XOM",
-    "UNH"
+    "JPM"
   ],
   "last_run": {
-    "run_id": "2026-09-15_late_morning_1100_ct_delayed_paper",
-    "timestamp": "2026-09-16T00:48:31.929562+00:00",
-    "mode": "autonomous_local_paper",
+    "run_id": "manual_20260924T114614662328",
+    "timestamp": "2026-09-24T02:46:14.665906+00:00",
+    "mode": "observation_only",
     "stock_api_verified": true,
-    "orders_placed": false,
-    "paper_action": "no_trade",
-    "paper_result": "no_trade"
+    "orders_placed": false
   },
-  "next_task_focus": "At 2026-09-16 07:45 Central, restart with pre-market news, official-calendar, readiness, account, and overnight-market checks. Do not backfill the missed 2026-09-15 intraday slots. Live trading remains disabled.",
+  "previous_round": {
+    "dates": [
+      "2026-09-15",
+      "2026-09-16",
+      "2026-09-17",
+      "2026-09-18",
+      "2026-09-21",
+      "2026-09-22",
+      "2026-09-23"
+    ],
+    "scheduled_slots": 42,
+    "completed_read_only_slots": 6,
+    "fully_completed_trading_days": 0,
+    "result": "not_counted_as_a_completed_7_day_experiment"
+  },
+  "next_task_focus": "2026-09-24 07:45 Central 执行第二轮盘前检查；先验证只读数据，再建立观察列表。真实交易继续禁用。",
   "human_confirmation_needed": [
     "Keep mobile notifications enabled for this thread if you want run records pushed to your phone.",
-    "Consider rotating the API key later because screenshots exposed credential material."
+    "No Alpaca account is required; public supplemental bars must pass freshness and completeness checks before a new paper position.",
+    "Consider rotating the Binance API key because earlier screenshots exposed credential material."
   ]
 }

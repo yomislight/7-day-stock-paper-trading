@@ -1,6 +1,6 @@
 # Binance Stocks API Integration
 
-Production base URL: https://api.binance.com. Local HMAC credentials: root 09-API密钥-仅本地/binance-api.env. No credentials are read from other projects. Default checker scope is Stocks; --spot-only is a diagnostic option.
+Production base URL: https://api.binance.com. Local HMAC credentials: root 10-API密钥-仅本地-local-secrets/binance-api.env. No credentials are read from other projects. Default checker scope is Stocks; --spot-only is a diagnostic option.
 
 | Purpose | GET path | Authentication |
 | --- | --- | --- |

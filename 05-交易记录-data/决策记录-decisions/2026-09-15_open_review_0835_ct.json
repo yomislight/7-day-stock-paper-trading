@@ -1,0 +1,22 @@
+{
+  "paper_trading_only": true,
+  "action": "no_trade",
+  "symbol": "AAPL",
+  "reason_zh": "开盘后方向分化：SPY 和 AAPL 偏弱，QQQ、NVDA、XOM 偏强。虽然 NVDA、XOM 相对强且点差较窄，但缺少可靠成交量、VWAP 和完整日内区间，无法验证突破质量并定义可复核的入场、止损和目标；叠加高油价、高收益率和 FOMC 风险，因此不追价。",
+  "data_gap_zh": "Binance Stocks 本轮只有最新买卖报价，缺少可靠的开盘成交量、VWAP 和完整日内区间。",
+  "thesis": "The 08:35 Central post-open review shows mixed market leadership and no reliable opening-volume confirmation. SPY is slightly below its prior close while QQQ, NVDA, and XOM are firmer, and AAPL reversed below its prior close. Elevated oil, Treasury yields, and the ongoing FOMC meeting add event risk. Wait for a cleaner price-and-volume setup at the 11:00 Central review.",
+  "evidence": [
+    {
+      "category": "live_market_quotes",
+      "source": "05-交易记录-data/证据资料-evidence/2026-09-15_open_review_0835_ct-research.md"
+    },
+    {
+      "category": "market_context",
+      "source": "https://apnews.com/article/123ddc2d8ba06c324cbbd899f7eeebd2"
+    },
+    {
+      "category": "macro_event",
+      "source": "https://www.federalreserve.gov/newsevents/2026-september.htm"
+    }
+  ]
+}

@@ -55,7 +55,7 @@ jobs:
             printf 'BINANCE_API_KEY=%s\n' "$BINANCE_API_KEY"
             printf 'BINANCE_API_SECRET=%s\n' "$BINANCE_API_SECRET"
             printf 'BINANCE_ENV=%s\n' "${BINANCE_ENV:-production}"
-          } > 09-API密钥-仅本地/binance-api.env
+          } > 10-API密钥-仅本地-local-secrets/binance-api.env
 
       - name: Validate project files
         shell: bash
@@ -121,7 +121,7 @@ jobs:
         if: always()
         shell: bash
         run: |
-          find 09-API密钥-仅本地 -maxdepth 1 -type f -name 'binance-api.env' -delete
+          find 10-API密钥-仅本地-local-secrets -maxdepth 1 -type f -name 'binance-api.env' -delete
 
       - name: Upload non-secret run records
         if: always()
@@ -134,6 +134,7 @@ jobs:
             observation-output.json
             04-运行状态-state/readiness.json
             05-交易记录-data/current-state.json
-            05-交易记录-data/journal/*.md
-            05-交易记录-data/evidence/*.json
-            05-交易记录-data/evidence/*.md
+            05-交易记录-data/运行日志-journal/*.md
+            09-每日中文报告-daily-reports/*.md
+            05-交易记录-data/证据资料-evidence/*.json
+            05-交易记录-data/证据资料-evidence/*.md

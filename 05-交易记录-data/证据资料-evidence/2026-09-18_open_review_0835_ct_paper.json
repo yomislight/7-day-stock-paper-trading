@@ -1,0 +1,66 @@
+{
+  "run_id": "2026-09-18_open_review_0835_ct_paper",
+  "timestamp": "2026-09-18T13:36:45.682197+00:00",
+  "mode": "local_paper_only",
+  "live_order_sent": false,
+  "decision": {
+    "paper_trading_only": true,
+    "action": "no_trade",
+    "symbol": "AAPL",
+    "reason_zh": "08:35 Central 开盘后只读检查显示 AAPL 买卖报价为 336.23/336.32，点差约 2.7 个基点，流动性表面合格；但系统仍缺少可复核的正常交易时段成交量、VWAP、指数市场宽度和工业生产数据发布后的跨资产反应，无法用至少两类独立的实时市场证据确认入场方向、止损结构与目标。因此本轮保持空仓，不为了产生交易记录而降低标准。",
+    "data_gap_zh": "Binance 股票接口提供了新鲜报价和交易规则，但当前项目没有可靠的日内成交量、VWAP、K 线和市场宽度数据源；单点报价与盘前新闻不能共同构成足够的入场依据。",
+    "thesis": "Post-open quote quality is acceptable, but direction and risk/reward are not verifiable without regular-session volume, VWAP, breadth, and post-release confirmation. Stay in cash.",
+    "watchlist": [
+      "SPY",
+      "QQQ",
+      "DIA",
+      "IWM",
+      "AAPL",
+      "NVDA",
+      "XOM",
+      "JPM"
+    ],
+    "evidence": [
+      {
+        "category": "broker_read_only",
+        "source": "05-交易记录-data/证据资料-evidence/2026-09-18_open_review_0835_ct.json",
+        "note_zh": "Binance 股票只读资格、规则、报价和订单读取均通过；AAPL 报价 336.23/336.32，真实交易权限关闭。"
+      },
+      {
+        "category": "market_context",
+        "source": "05-交易记录-data/决策记录-decisions/2026-09-18_pre_market_0745_ct.json",
+        "note_zh": "盘前证据显示全球风险信号不一致，且美国工业生产数据与美联储讲话构成开盘事件风险；需要正常时段数据确认。"
+      }
+    ]
+  },
+  "result": {
+    "status": "no_trade",
+    "event": null,
+    "snapshot": {
+      "rules": {
+        "symbol": "AAPL",
+        "tradability": "BUY_SELL",
+        "fractionable": true,
+        "stepSize": "0.000000001",
+        "minQty": null,
+        "maxQty": "1000000.000000000",
+        "minNotional": "5.00000000",
+        "maxNotional": "1000000.00000000"
+      },
+      "quote": {
+        "symbol": "AAPL",
+        "bid": "336.69",
+        "ask": "336.7",
+        "bid_size": "40",
+        "ask_size": "40",
+        "received_at": "2026-09-18T13:36:46.680366+00:00"
+      }
+    }
+  },
+  "state": {
+    "cash_usdt": 10000,
+    "equity_usdt": 10000,
+    "positions": [],
+    "daily_open_risk_usdt": 0
+  }
+}

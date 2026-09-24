@@ -129,6 +129,16 @@ class PaperLedgerTests(unittest.TestCase):
         self.assertLess(state["cash_usdt"], 10000)
         self.assertFalse(event.get("live_order_sent", False))
 
+    def test_new_session_resets_daily_loss_and_updates_progress(self):
+        self.state["risk_date"] = "2026-09-14"
+        self.state["daily_realized_pnl_usdt"] = -100
+        self._write_all()
+        ledger = self.make_ledger()
+        ledger._roll_trading_day(self.now)
+        self.assertEqual(ledger.state["risk_date"], "2026-09-15")
+        self.assertEqual(ledger.state["daily_realized_pnl_usdt"], 0)
+        self.assertEqual(ledger.state["trading_day_index"], 1)
+
     def test_rejects_single_evidence_category(self):
         request = self.request()
         request["evidence"] = [{"category": "price_action", "source": "one source"}]

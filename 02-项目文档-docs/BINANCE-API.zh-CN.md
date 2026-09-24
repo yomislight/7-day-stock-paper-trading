@@ -1,6 +1,6 @@
 # 币安股票 API 接入说明
 
-正式地址：https://api.binance.com。本地 HMAC 密钥统一读取根目录 09-API密钥-仅本地/binance-api.env。检查脚本默认使用股票接口，--spot-only 仅用于现货账户诊断。
+正式地址：https://api.binance.com。本地 HMAC 密钥统一读取根目录 10-API密钥-仅本地-local-secrets/binance-api.env。检查脚本默认使用股票接口，--spot-only 仅用于现货账户诊断。
 
 | 用途 | GET 路径 | 认证方式 |
 | --- | --- | --- |

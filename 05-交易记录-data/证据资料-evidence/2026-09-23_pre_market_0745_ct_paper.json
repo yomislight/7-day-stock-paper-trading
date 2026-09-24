@@ -1,0 +1,71 @@
+{
+  "run_id": "2026-09-23_pre_market_0745_ct_paper",
+  "timestamp": "2026-09-23T12:54:16.235712+00:00",
+  "mode": "local_paper_only",
+  "live_order_sent": false,
+  "decision": {
+    "paper_trading_only": true,
+    "action": "no_trade",
+    "symbol": "AAPL",
+    "reason_zh": "07:45 Central 属于盘前研究时段，日程明确禁止下单。美股期货整体持平，市场等待中东停火谈判、美国与中国领导人会晤以及稍晚公布的美国 9 月 PMI；原油仍接近每桶 100 美元，事件风险和通胀压力均未消失。正常交易时段的价格延续、成交量、VWAP 与市场宽度尚未形成，因此保持空仓。",
+    "data_gap_zh": "Binance 股票只读接口已验证，但盘前仍缺少可靠的日内成交量、VWAP、指数市场宽度和 PMI 公布后的价格反应；这些数据不足以建立止损与目标明确的新仓。",
+    "thesis": "Pre-market observation only. Futures are steady while geopolitical talks, the U.S.-China summit, oil near $100, and the September PMI remain unresolved. Wait for regular-session confirmation.",
+    "watchlist": [
+      "SPY",
+      "QQQ",
+      "DIA",
+      "IWM",
+      "AAPL",
+      "NVDA",
+      "XOM",
+      "JPM"
+    ],
+    "evidence": [
+      {
+        "category": "market_context",
+        "source": "https://www.investing.com/news/economy-news/wall-st-futures-steady-with-focus-on-mideast-talks-uschina-summit-4912483",
+        "note_zh": "Reuters 报道美股期货盘前持平，市场关注中东谈判、美中会晤及 9 月 PMI，油价仍处高位。"
+      },
+      {
+        "category": "official_macro_calendar",
+        "source": "https://www.newyorkfed.org/research/calendars/i-sep26.html",
+        "note_zh": "纽约联储经济日历显示 9 月 23 日盘中宏观发布较少，但 9 月 24 日初请失业金与新屋销售、9 月 25 日耐用品订单等风险仍在前方。"
+      },
+      {
+        "category": "broker_read_only",
+        "source": "05-交易记录-data/证据资料-evidence/2026-09-23_pre_market_0745_ct.json",
+        "note_zh": "Binance 股票只读接口、股票资格、规则、报价和订单读取检查通过；真实交易权限保持关闭。"
+      }
+    ]
+  },
+  "result": {
+    "status": "no_trade",
+    "event": null,
+    "snapshot": {
+      "rules": {
+        "symbol": "AAPL",
+        "tradability": "BUY_SELL",
+        "fractionable": true,
+        "stepSize": "0.000000001",
+        "minQty": null,
+        "maxQty": "1000000.000000000",
+        "minNotional": "5.00000000",
+        "maxNotional": "1000000.00000000"
+      },
+      "quote": {
+        "symbol": "AAPL",
+        "bid": "341.48",
+        "ask": "341.75",
+        "bid_size": "40",
+        "ask_size": "40",
+        "received_at": "2026-09-23T12:54:17.973106+00:00"
+      }
+    }
+  },
+  "state": {
+    "cash_usdt": 10000,
+    "equity_usdt": 10000,
+    "positions": [],
+    "daily_open_risk_usdt": 0
+  }
+}

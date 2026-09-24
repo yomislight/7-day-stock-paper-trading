@@ -1,0 +1,22 @@
+{
+  "paper_trading_only": true,
+  "action": "no_trade",
+  "symbol": "AAPL",
+  "reason_zh": "07:45 是盘前研究时段。股指期货偏弱，油价和美债收益率偏高，又处于 FOMC 会议窗口；正常交易时段的价格、点差和成交量尚未确认，因此不买入。",
+  "data_gap_zh": "盘前没有正常交易时段的价格、成交量和可执行止损依据。",
+  "thesis": "The 07:45 Central task is pre-market research only. Equity futures are soft, oil and Treasury yields are elevated, and the first day of the FOMC meeting raises event risk. Wait for regular-session price, spread, and volume confirmation before considering a paper entry.",
+  "evidence": [
+    {
+      "category": "market_context",
+      "source": "https://apnews.com/article/123ddc2d8ba06c324cbbd899f7eeebd2"
+    },
+    {
+      "category": "macro_calendar",
+      "source": "https://www.federalreserve.gov/newsevents/2026-september.htm"
+    },
+    {
+      "category": "market_session",
+      "source": "03-定时任务-routines/schedule.json"
+    }
+  ]
+}

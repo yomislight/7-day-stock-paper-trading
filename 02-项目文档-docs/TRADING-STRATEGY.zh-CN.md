@@ -46,6 +46,7 @@
 
 - `04-运行状态-state/readiness.json` 允许 paper trading，且不允许 live trading。
 - 标的在允许范围内，并且可通过 Binance 股票/ETF权限访问，或可在本地 paper ledger 中模拟。
+- 同时具有新鲜的 Binance 可执行报价，以及只读公共五分钟成交量与推导 VWAP 证据。公共 K 线只能作为研究背景，不能描述成官方 SIP 全市场合并数据；推导 VWAP 也不能写成交易所发布的正式 VWAP。
 - 至少两个独立证据类别支持交易想法，例如：
   - 市场趋势或板块背景
   - 价格相对前期区间、VWAP、均线或支撑/阻力的行为

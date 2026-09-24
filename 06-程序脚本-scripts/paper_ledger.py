@@ -108,6 +108,18 @@ class PaperLedger:
             "trade": capital * decimal_value(self.readiness["max_single_trade_loss_percent"], "trade percent") / 100,
         }
 
+    def _roll_trading_day(self, now):
+        local_date = now.astimezone(ZoneInfo("America/Chicago")).date().isoformat()
+        if self.state.get("risk_date") != local_date:
+            self.state["risk_date"] = local_date
+            self.state["daily_realized_pnl_usdt"] = 0
+            if not self.state.get("positions"):
+                self.state["daily_open_risk_usdt"] = 0
+        dates = self.state.get("planned_trading_dates", [])
+        if local_date in dates:
+            self.state["trading_day_index"] = dates.index(local_date) + 1
+        return local_date
+
     def _assert_entry_window(self, now):
         local = now.astimezone(ZoneInfo("America/Chicago"))
         if local.date().isoformat() not in self.state.get("planned_trading_dates", []):
@@ -204,6 +216,7 @@ class PaperLedger:
     def open_long(self, request, now=None):
         now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
         self.validate_readiness(now)
+        self._roll_trading_day(now)
         self._assert_entry_window(now)
         if self.state.get("positions"):
             raise PaperLedgerError("Only one active paper position is allowed")
@@ -304,6 +317,7 @@ class PaperLedger:
     def mark(self, request, now=None, evaluate=False):
         now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
         self.validate_readiness(now)
+        self._roll_trading_day(now)
         positions = self.state.get("positions", [])
         if len(positions) != 1:
             raise PaperLedgerError("Exactly one active paper position is required")
@@ -344,6 +358,7 @@ class PaperLedger:
     def close(self, request, now=None):
         now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
         self.validate_readiness(now)
+        self._roll_trading_day(now)
         positions = self.state.get("positions", [])
         if len(positions) != 1:
             raise PaperLedgerError("Exactly one active paper position is required")

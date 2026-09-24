@@ -1,0 +1,76 @@
+{
+  "run_id": "2026-09-17_pre_market_0745_ct_paper",
+  "timestamp": "2026-09-17T12:47:22.617196+00:00",
+  "mode": "local_paper_only",
+  "live_order_sent": false,
+  "decision": {
+    "paper_trading_only": true,
+    "action": "no_trade",
+    "symbol": "AAPL",
+    "reason_zh": "07:45 Central 是盘前研究时段，日程明确禁止下单。股指期货在美联储加息后的首个交易日反弹，但十年期美债收益率仍接近 5%，且 08:30 Eastern 将公布初请失业金、房屋开工和费城联储制造业数据；开盘前尚无正常交易时段的成交量、市场宽度和价格确认，因此保持空仓。",
+    "data_gap_zh": "Binance 股票只读接口和 AAPL 报价已验证，但盘前只有单点报价，没有正常交易时段成交量、VWAP、指数市场宽度以及 08:30 Eastern 宏观数据结果，不能形成可执行入场计划。",
+    "thesis": "Pre-market observation only. Futures are rebounding after the Fed hike and oil is lower, but the 10-year yield remains near 5% and several market-moving releases are due before the open. Wait for regular-session price, spread, volume and breadth confirmation.",
+    "watchlist": [
+      "SPY",
+      "QQQ",
+      "DIA",
+      "IWM",
+      "AAPL",
+      "NVDA",
+      "XOM",
+      "JPM"
+    ],
+    "evidence": [
+      {
+        "category": "market_context",
+        "source": "https://apnews.com/article/stock-markets-fed-oil-26a4da336d561d213a3f28f260f25d2c",
+        "note_zh": "标普、道指和纳指期货分别约上涨 0.8%、0.7% 和 1.1%；十年期美债收益率仍接近 5%，布伦特和美国原油分别下跌约 2.2% 和 1.7%。"
+      },
+      {
+        "category": "macro_calendar",
+        "source": "https://www.newyorkfed.org/research/calendars/i-sep26.html",
+        "note_zh": "08:30 Eastern 将公布初请失业金、房屋开工和费城联储制造业调查，10:00 Eastern 还有待定房屋销售。"
+      },
+      {
+        "category": "official_housing_release",
+        "source": "https://www.census.gov/economic-indicators/calendar-listview.html",
+        "note_zh": "美国人口普查局确认 9 月 17 日 08:30 Eastern 发布 8 月新屋开工和建筑许可数据。"
+      },
+      {
+        "category": "broker_read_only",
+        "source": "05-交易记录-data/证据资料-evidence/2026-09-17_pre_market_0745_ct.json",
+        "note_zh": "Binance 股票只读接口、权限、订单读取和 AAPL 报价新鲜度检查均通过；交易权限保持关闭。"
+      }
+    ]
+  },
+  "result": {
+    "status": "no_trade",
+    "event": null,
+    "snapshot": {
+      "rules": {
+        "symbol": "AAPL",
+        "tradability": "BUY_SELL",
+        "fractionable": true,
+        "stepSize": "0.000000001",
+        "minQty": null,
+        "maxQty": "1000000.000000000",
+        "minNotional": "5.00000000",
+        "maxNotional": "1000000.00000000"
+      },
+      "quote": {
+        "symbol": "AAPL",
+        "bid": "334.14",
+        "ask": "334.3",
+        "bid_size": "40",
+        "ask_size": "480",
+        "received_at": "2026-09-17T12:47:28.035473+00:00"
+      }
+    }
+  },
+  "state": {
+    "cash_usdt": 10000,
+    "equity_usdt": 10000,
+    "positions": [],
+    "daily_open_risk_usdt": 0
+  }
+}

@@ -1,18 +1,19 @@
 {
   "experiment_name": "7天 Binance 股票/ETF paper trading 实验",
+  "experiment_round": 2,
   "timezone": "America/Chicago",
   "cycle_length_trading_days": 7,
   "max_checks_per_trading_day": 6,
   "late_start_grace_minutes": 30,
-  "activation_status": "github_actions_deployed_hosted_runner_blocked_http_451",
+  "activation_status": "round_2_six_independent_gpt_tasks_active_local_fallback_waiting_permission",
   "planned_trading_dates": [
-    "2026-09-15",
-    "2026-09-16",
-    "2026-09-17",
-    "2026-09-18",
-    "2026-09-21",
-    "2026-09-22",
-    "2026-09-23"
+    "2026-09-24",
+    "2026-09-25",
+    "2026-09-28",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02"
   ],
   "default_mode": "paper_trading_only",
   "note": "美股常规开盘时间是 Central 时间 8:30 a.m. / Eastern 时间 9:30 a.m.。第二次检查设置为 Central 时间 8:35 a.m.，用于观察开盘后第一轮市场状态，同时保持每天 6 次检查。",

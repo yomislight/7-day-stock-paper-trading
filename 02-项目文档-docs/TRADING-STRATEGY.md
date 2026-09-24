@@ -46,6 +46,7 @@ A paper trade may be considered only when all required conditions are met:
 
 - `04-运行状态-state/readiness.json` allows paper trading and does not allow live trading.
 - Asset is in the permitted universe and is supported by Binance stock/ETF access or the local paper ledger.
+- A fresh Binance executable quote and fresh read-only public five-minute volume/derived-VWAP evidence are both available. The public bars are contextual research data, not official consolidated SIP data, and the derived VWAP is not an exchange-published VWAP.
 - At least two independent evidence categories support the trade idea, such as:
   - Market trend or sector context
   - Price action relative to prior range, VWAP, moving average, or support/resistance

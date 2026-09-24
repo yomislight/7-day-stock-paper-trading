@@ -1,0 +1,22 @@
+{
+  "paper_trading_only": true,
+  "action": "no_trade",
+  "symbol": "AAPL",
+  "reason_zh": "原定 11:00 的任务直到 19:46 Central、市场收盘后才实际执行。此时无法还原 11:00 的真实盘口和成交条件，也已经错过后续风险管理检查，所以不能补做历史模拟交易。组合本来就是空仓，因此保持 10,000 USDT 现金。",
+  "data_gap_zh": "11:00、13:00、14:15 和 14:45 的实时执行条件均未被按时记录，不能事后补造。",
+  "thesis": "The 11:00 Central heartbeat was delivered to the runner after the U.S. session had already closed at 19:46 Central. Backfilling a historical entry would fabricate execution conditions and the later risk-management checks were also missed. The portfolio is already flat, so preserve cash and record the scheduling failure instead of simulating a trade.",
+  "evidence": [
+    {
+      "category": "runtime_timing",
+      "source": "05-交易记录-data/证据资料-evidence/2026-09-15_late_morning_1100_ct_delayed-research.md"
+    },
+    {
+      "category": "read_only_account_and_quote",
+      "source": "05-交易记录-data/证据资料-evidence/manual_20260916T094710872080.json"
+    },
+    {
+      "category": "market_close_context",
+      "source": "https://apnews.com/article/b1b1bc9f943da62c6a639a8761b4eca3"
+    }
+  ]
+}

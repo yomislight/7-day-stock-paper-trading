@@ -61,7 +61,7 @@ class RuntimeTests(unittest.TestCase):
     def test_export_recovery_preserves_portfolio(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
-            for name in ("05-交易记录-data/journal", "05-交易记录-data/evidence"):
+            for name in ("05-交易记录-data/运行日志-journal", "05-交易记录-data/证据资料-evidence"):
                 (root / name).mkdir(parents=True)
             state_path = root / "05-交易记录-data/current-state.json"
             state_path.write_text(json.dumps({"cash_usdt": 17, "positions": [{"symbol": "EXAMPLE"}]}))
@@ -76,7 +76,7 @@ class RuntimeTests(unittest.TestCase):
             self.assertEqual(state["cash_usdt"], 17)
             self.assertEqual(state["positions"], [{"symbol": "EXAMPLE"}])
             self.assertEqual(state["last_run"]["run_id"], "one")
-            self.assertEqual(len(list((root / "05-交易记录-data/journal").glob("*.md"))), 1)
+            self.assertEqual(len(list((root / "05-交易记录-data/运行日志-journal").glob("*.md"))), 1)
 
 
 if __name__ == "__main__":

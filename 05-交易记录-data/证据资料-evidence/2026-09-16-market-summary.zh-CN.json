@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-16",
+  "market_session": "US regular session",
+  "summary_zh": "盘前在油价回落和股指期货小幅上涨的推动下，市场有轻微风险偏好修复，但全天核心变量是美联储决议。美联储加息 25 个基点至 3.75%-4.00%，并继续强调通胀偏高，股市在决议后由稳转弱。",
+  "indices": [
+    {
+      "name": "标普500",
+      "close": 7551.81,
+      "change_points": -33.92,
+      "change_percent": -0.4
+    },
+    {
+      "name": "道琼斯工业指数",
+      "close": 51461.9,
+      "change_points": -631.21,
+      "change_percent": -1.2
+    },
+    {
+      "name": "纳斯达克综合指数",
+      "close": 25978.42,
+      "change_points": -3.15,
+      "change_percent": -0.1,
+      "note_zh": "跌幅不足 0.1%"
+    },
+    {
+      "name": "罗素2000",
+      "close": 2858.81,
+      "change_points": -11.47,
+      "change_percent": -0.4
+    }
+  ],
+  "drivers_zh": [
+    "盘前油价回落带来短暂的风险偏好修复。",
+    "美联储加息 25 个基点，并强调通胀仍然偏高。",
+    "十年期美债收益率接近 5%，继续压制估值和风险资产。",
+    "道指显著弱于纳指，说明卖压并非平均分布，而是存在明显的板块和风格差异。"
+  ],
+  "strategy_implications_zh": [
+    "重大利率决议日前，盘前小幅上涨不能单独作为入场依据。",
+    "若系统正常运行，决议前应缩小仓位或保持观望，并等待价格、成交量和市场宽度共同确认。",
+    "本日没有形成有效的自动运行记录，因此不得根据收盘结果倒推或补写成交。"
+  ],
+  "next_session_watch_zh": [
+    "观察加息后的第二日延续效应，以及十年期美债收益率是否继续上行。",
+    "比较 SPY、QQQ、DIA、IWM 的相对强弱，确认道指弱势是否扩散。",
+    "在任何模拟开仓前，先验证自动任务权限、账户只读连接和行情新鲜度。"
+  ],
+  "sources": [
+    "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+    "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916b.htm",
+    "https://apnews.com/article/e2e82957e490b7be205db6013f621c3d",
+    "https://apnews.com/article/b082e78c9b572b6b0a94b8033a0ee96b"
+  ]
+}

@@ -11,6 +11,8 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from binance_readiness_check import CONFIG, ROOT, check_stocks, load_config, update_readiness
+from daily_report import write_daily_report
+from public_market_data_check import check as check_market_data, update_readiness as update_market_data_readiness
 from run_store import RunStore, utc_now
 
 STARTUP = ("AGENTS.md", "AGENTS.zh-CN.md", "02-项目文档-docs/TRADING-STRATEGY.md", "02-项目文档-docs/TRADING-STRATEGY.zh-CN.md",
@@ -51,11 +53,18 @@ def export_records(store):
     # Export deterministic per-run files; replay after a crash cannot duplicate entries.
     records = store.completed()
     for run_id, payload in records:
-        atomic_write(ROOT / "05-交易记录-data" / "journal" / (run_id + ".md"), payload["journal"])
-        atomic_write(ROOT / "05-交易记录-data" / "evidence" / (run_id + ".json"), json.dumps(payload["check"], indent=2) + "\n")
+        atomic_write(ROOT / "05-交易记录-data" / "运行日志-journal" / (run_id + ".md"), payload["journal"])
+        atomic_write(ROOT / "05-交易记录-data" / "证据资料-evidence" / (run_id + ".json"), json.dumps(payload["check"], indent=2) + "\n")
     # Portfolio JSON remains authoritative; run recovery never rolls it backwards.
     if records:
         run_id, payload = records[-1]
+        if len(run_id) >= 10 and run_id[4:5] == "-" and run_id[7:8] == "-":
+            report_date = run_id[:10]
+        else:
+            checked_at = payload.get("check", {}).get("checked_at")
+            report_date = datetime.fromisoformat(checked_at.replace("Z", "+00:00")).astimezone(
+                ZoneInfo("America/Chicago")
+            ).date().isoformat()
         path = ROOT / "05-交易记录-data" / "current-state.json"
         state = json.loads(path.read_text())
         latest = state.get("last_run") or {}
@@ -63,26 +72,51 @@ def export_records(store):
         if latest.get("timestamp", "") <= timestamp:
             state["last_run"] = {"run_id": run_id, "timestamp": timestamp, "mode": "observation_only",
                                  "stock_api_verified": payload["check"].get("stock_etf_access_verified", False), "orders_placed": False}
+            dates = state.get("planned_trading_dates", [])
+            if report_date in dates:
+                state["trading_day_index"] = dates.index(report_date) + 1
+                if state.get("risk_date") != report_date:
+                    state["risk_date"] = report_date
+                    state["daily_realized_pnl_usdt"] = 0
+                    if not state.get("positions"):
+                        state["daily_open_risk_usdt"] = 0
             atomic_write(path, json.dumps(state, ensure_ascii=False, indent=2) + "\n")
+        # Only refresh the latest trading day. Older Chinese reports are immutable snapshots.
+        write_daily_report(report_date, ROOT)
 
 
 def make_payload(run_id, check, state):
     journal = "\n".join([
-        "# Read-only observation / 只读观察", "", "- Run: " + run_id,
-        "- Timestamp: " + utc_now(),
-        "- Action / 本次操作: Read Binance Stocks API and record actual verification results.",
-        "- Reason / 原因: Verify data and account access before experiment execution.",
-        "- Order proposed / 提出订单: no", "- Order placed / 提交订单: no", "- Order filled / 成交: no",
-        "- Local paper holdings / 本地模拟持仓: " + json.dumps(state.get("positions", []), ensure_ascii=False),
-        "- Local paper cash / 本地模拟现金 USDT: " + str(state.get("cash_usdt")),
-        "- Local paper risk / 本地模拟未平仓风险 USDT: " + str(state.get("daily_open_risk_usdt")),
-        "- Real account holdings and cash / 真实账户资产: not reconciled by this checker.",
-        "- Errors / 检查问题: " + json.dumps(check.get("errors", [])),
-        "- Next / 下次重点: Resolve authentication, verify Stocks data and review the stop/fill draft.",
-        "- Human input / 人工事项: Local API settings if authentication fails; review stop/fill draft.",
-        "- Evidence: ../evidence/" + run_id + ".json", "",
+        "# 只读观察记录", "", "- 运行编号：" + run_id,
+        "- 记录时间：" + utc_now(),
+        "- 本次操作：读取 Binance 股票接口，并保存实际验证结果。",
+        "- 操作原因：在模拟交易判断前核对数据和账户读取状态。",
+        "- 是否提出订单：否", "- 是否真实下单：否", "- 是否成交：否",
+        "- 本地模拟持仓：" + json.dumps(state.get("positions", []), ensure_ascii=False),
+        "- 本地模拟现金：" + str(state.get("cash_usdt")) + " USDT",
+        "- 本地模拟未平仓风险：" + str(state.get("daily_open_risk_usdt")) + " USDT",
+        "- 真实账户资产：本检查器不做真实资产对账。",
+        "- 检查问题：" + json.dumps(check.get("errors", []), ensure_ascii=False),
+        "- 下次重点：继续核对认证、股票行情读取和模拟交易风险。",
+        "- 人工事项：认证失败时检查本地 API 设置；真实交易始终需要人工明确确认。",
+        "- 证据文件：../evidence/" + run_id + ".json", "",
     ])
     return {"journal": journal, "check": check}
+
+
+def supplemental_market_check():
+    try:
+        result = check_market_data()
+    except (OSError, ValueError):
+        result = {
+            "checked_at": utc_now(),
+            "provider": "yahoo_finance_public_chart",
+            "credentials_required": False,
+            "market_data_ready": False,
+            "errors": ["Public market-data source is unavailable or invalid"],
+        }
+    update_market_data_readiness(result)
+    return result
 
 
 def main():
@@ -115,7 +149,7 @@ def main():
                 return 0
             for name in STARTUP:
                 (ROOT / name).read_text(encoding="utf-8")
-            journals = sorted((ROOT / "05-交易记录-data" / "journal").glob("*.md"), key=lambda p: p.stat().st_mtime)
+            journals = sorted((ROOT / "05-交易记录-data" / "运行日志-journal").glob("*.md"), key=lambda p: p.stat().st_mtime)
             if journals:
                 journals[-1].read_text(encoding="utf-8")
             run_id = "manual_" + datetime.now().strftime("%Y%m%dT%H%M%S%f") if args.manual else slot
@@ -125,6 +159,10 @@ def main():
             state = json.loads((ROOT / "05-交易记录-data" / "current-state.json").read_text())
             result = check_stocks(load_config(CONFIG))
             update_readiness(result)
+            market_data = supplemental_market_check()
+            result["supplemental_market_data"] = market_data
+            if market_data.get("market_data_ready") is not True:
+                result["errors"].append("supplemental_market_data: not ready for a new paper position")
             store.finish(run_id, make_payload(run_id, result, state))
             export_records(store)
             print(json.dumps({"run_id": run_id, "stock_api_verified": result["stock_etf_access_verified"], "errors": result["errors"]}, indent=2))

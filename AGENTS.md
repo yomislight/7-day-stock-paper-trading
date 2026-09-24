@@ -17,7 +17,8 @@ It is not a live trading system and must not be described as a profitable system
 - Target platform: Binance stock/ETF trading capability.
 - Before any execution path is used, verify whether Binance account permissions, region eligibility, API support, and any paper/sandbox capability are available.
 - If Binance does not expose paper trading for stocks/ETFs, use the local paper ledger in this project.
-- Binance API keys must stay local in the root `09-API密钥-仅本地/binance-api.env`; never ask the user to paste keys in chat. The read-only checker reads only this file. Share `09-API密钥-仅本地/binance-api.env.example`, never the completed credential file.
+- Binance API keys must stay local in the root `10-API密钥-仅本地-local-secrets/binance-api.env`; never ask the user to paste keys in chat. The read-only checker reads only this file. Share `10-API密钥-仅本地-local-secrets/binance-api.env.example`, never the completed credential file.
+- Binance is the source for stock rules and final executable quotes. A keyless public chart source supplies five-minute bars, volume context, and a derived VWAP for paper research only. Missing, stale, or incomplete supplemental data blocks new paper positions but must never block risk reduction. Never describe the public bars as official consolidated SIP data.
 
 ## Permitted Work
 
@@ -51,15 +52,16 @@ Every scheduled run must read these files before taking action:
 - `03-定时任务-routines/CONTINUITY.zh-CN.md`
 - `04-运行状态-state/readiness.json`
 - `05-交易记录-data/current-state.json`
-- Latest file in `05-交易记录-data/journal/`, if present
+- Latest file in `05-交易记录-data/运行日志-journal/`, if present
 
 ## Required End-of-Run Writes
 
 Every scheduled run must update:
 
 - `05-交易记录-data/current-state.json`
-- The current trading day's journal file in `05-交易记录-data/journal/`
-- Evidence notes in `05-交易记录-data/evidence/`
+- The current trading day's journal file in `05-交易记录-data/运行日志-journal/`
+- Evidence notes in `05-交易记录-data/证据资料-evidence/`
+- The current day's fully Chinese summary in `09-每日中文报告-daily-reports/`
 
 Each journal entry must state:
 
@@ -79,4 +81,4 @@ Each journal entry must state:
 - Use `02-项目文档-docs/BINANCE-API.md` and its Chinese companion for the Stocks endpoint mapping. The default checker uses `/sapi/v1/equity/`, not Spot symbol probes.
 - `06-程序脚本-scripts/run_observation.py` is read-only. `06-程序脚本-scripts/paper_engine.py` may simulate local paper fills only; it has no broker POST path.
 - The approved local paper rules enforce one position, 10% maximum notional, 0.5% maximum planned loss, two evidence categories, 1.5 net reward/risk, no new entry after 11:30 Central, and no overnight position.
-- Preserve both languages. Dates in the schedule are provisional until authentication and review pass; do not count setup days as experiment sessions.
+- Preserve both languages. Round-two dates are authoritative in the bilingual schedule; do not count setup, manual checks, missed slots, or backfilled reports as completed experiment sessions.

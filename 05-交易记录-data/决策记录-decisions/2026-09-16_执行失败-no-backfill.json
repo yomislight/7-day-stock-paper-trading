@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-16",
+  "scheduled_task": "pre_market_0745_ct",
+  "mode": "paper_trading_only",
+  "status": "execution_failed",
+  "action": "no_trade",
+  "orders_proposed": false,
+  "orders_placed": false,
+  "orders_filled": false,
+  "reason_zh": "原定 07:45 Central 的自动任务虽已触发，但两次启动项目运行器都因本机权限审批超时而未创建进程。恢复检查时美国市场已经收盘，因此禁止补做历史模拟交易，也不能把本次执行失败记成策略主动观望。",
+  "market_context_zh": "盘前股指期货小幅上涨、油价回落，但市场等待美联储决议。美联储随后加息 25 个基点至 3.75%-4.00%，并强调通胀仍偏高；美股在决议后转跌，道指明显弱于纳指。",
+  "data_quality_zh": "没有形成当天六个时点的完整账户、持仓、订单和行情快照。资金与持仓仅能引用上一轮本地模拟账本，不能视为当日收盘核对结果。",
+  "risk_note_zh": "真实交易保持关闭；没有真实订单，也没有模拟成交。",
+  "next_action_zh": "下一交易日先验证定时运行权限和进程启动，再执行盘前检查；不得回填 9 月 16 日的历史成交。",
+  "sources": [
+    "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+    "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916b.htm",
+    "https://apnews.com/article/e2e82957e490b7be205db6013f621c3d",
+    "https://apnews.com/article/b082e78c9b572b6b0a94b8033a0ee96b"
+  ]
+}

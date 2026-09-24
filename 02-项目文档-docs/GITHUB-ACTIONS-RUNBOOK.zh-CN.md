@@ -3,7 +3,7 @@
 ## 安全边界
 
 - 仓库中不保存任何真实 API Key 或 Secret Key。
-- `09-API密钥-仅本地/binance-api.env` 只用于本地，不会被 Git 提交，也不会作为 artifact 上传。
+- `10-API密钥-仅本地-local-secrets/binance-api.env` 只用于本地，不会被 Git 提交，也不会作为 artifact 上传。
 - GitHub Actions 只从仓库的 Actions Secrets 读取凭据，并在运行期间创建权限为仅当前用户可读的临时文件。
 - 运行结束后删除临时文件。
 - 当前脚本只做 Binance 股票接口读取与本地 paper trading 记录，不提交真实订单。

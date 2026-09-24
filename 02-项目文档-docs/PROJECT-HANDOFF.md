@@ -4,7 +4,7 @@ Updated 2026-09-14. This captures relevant decisions, implementation, evidence a
 
 ## Agreed Direction
 
-All project changes belong in `/Users/a123/Desktop/7天股票交易实验`. Connect to actual Binance.com Stocks APIs using the dedicated local credential file. Real API connectivity is not live-order authorization. Adapt the Alpaca reference to Binance, preserve both languages, draft stop/fill rules before activating them, keep six research checks per US trading day, and use SQLite for execution records and recovery.
+All project changes belong in `/Users/a123/Desktop/7天股票交易实验`. Connect to actual Binance.com Stocks APIs using the dedicated local credential file. Real API connectivity is not live-order authorization. Alpaca is not in the runtime path because the user cannot complete its brokerage onboarding as a Japan resident. Keyless public five-minute bars may supplement paper research but are not official SIP data. Preserve both languages, keep six research checks per US trading day, and use SQLite for execution records and recovery.
 
 The user accepts experiment costs but did not specify new capital or risk figures. Existing paper limits remain 20 USDT capital, 10% maximum position, 0.5% single-trade risk and 2% daily risk. The v0.1 stop/fill document is not approved.
 
@@ -16,7 +16,7 @@ The default API checker uses Stocks rule, quote and open-order endpoints plus se
 
 Latest saved call: 2026-09-14 06:35:31 UTC / 15:35:31 Asia/Tokyo, run `manual_20260914T153531531996`. Public connectivity passed and credentials were present. Spot account returned HTTP 401 / Binance -2015; stock rules, quotes, open orders and API permissions returned HTTP 400 / Binance -2015. Account access and stock eligibility are unverified. Paper cash is 20 USDT with no positions. No order was proposed, submitted or filled. Real holdings and cash were not reconciled.
 
-Evidence: [API result](../05-交易记录-data/evidence/manual_20260914T153531531996.json), [journal](../05-交易记录-data/journal/manual_20260914T153531531996.md), [readiness](../04-运行状态-state/readiness.json). The error does not distinguish an invalid key from an IP or permission problem.
+Evidence: [API result](../05-交易记录-data/证据资料-evidence/manual_20260914T153531531996.json), [journal](../05-交易记录-data/运行日志-journal/manual_20260914T153531531996.md), [readiness](../04-运行状态-state/readiness.json). The error does not distinguish an invalid key from an IP or permission problem.
 
 ## Corrections and Remaining Gaps
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.yomi.seven-day-trading-observer</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>-B</string>
+    <string>/Users/a123/Desktop/7天股票交易实验/06-程序脚本-scripts/run_observation.py</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/a123/Desktop/7天股票交易实验</string>
+  <key>StartInterval</key>
+  <integer>300</integer>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>ProcessType</key>
+  <string>Background</string>
+  <key>StandardOutPath</key>
+  <string>/tmp/seven-day-trading-observer.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/seven-day-trading-observer-error.log</string>
+</dict>
+</plist>

@@ -9,10 +9,12 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from binance_readiness_check import HOSTS, check_stocks, get_json, load_config, update_readiness
+from daily_report import write_daily_report
 from paper_ledger import PaperLedger, PaperLedgerError, atomic_json, decimal_value
+from public_market_data_check import check as check_market_data, update_readiness as update_market_data_readiness
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "09-API密钥-仅本地" / "binance-api.env"
+CONFIG = ROOT / "10-API密钥-仅本地-local-secrets" / "binance-api.env"
 
 
 class PaperEngineError(ValueError):
@@ -105,12 +107,26 @@ def execute(decision, run_id, now=None):
     update_readiness(readiness)
     if readiness.get("stock_etf_access_verified") is not True:
         raise PaperEngineError("Fresh Stocks read verification failed")
+    if decision["action"] == "open_long":
+        try:
+            market_data = check_market_data([symbol], now=now)
+        except (OSError, ValueError) as exc:
+            raise PaperEngineError("Public supplemental market data is not ready") from exc
+        update_market_data_readiness(market_data)
+        if market_data.get("market_data_ready") is not True or symbol not in market_data.get("verified_symbols", []):
+            raise PaperEngineError("Fresh public 5-minute volume and derived VWAP are required for a new paper position")
 
     # The API check itself takes time; use a post-refresh timestamp for freshness validation.
     now = datetime.now(timezone.utc)
     ledger = build_ledger()
     ledger.validate_readiness(now)
     snapshot = fetch_snapshot(config, symbol, now)
+    if decision["action"] == "open_long":
+        snapshot["supplemental_market_data"] = {
+            "provider": market_data.get("provider"),
+            "limitations": market_data.get("limitations", []),
+            "symbol": market_data.get("symbols", {}).get(symbol),
+        }
     action = decision["action"]
     if action == "no_trade":
         return {"status": "no_trade", "event": None, "snapshot": snapshot}
@@ -138,6 +154,15 @@ def write_records(run_id, decision, result, now):
     ledger = build_ledger()
     local = now.astimezone(ZoneInfo("America/Chicago"))
     state = ledger.state
+    local_date = local.date().isoformat()
+    if state.get("risk_date") != local_date:
+        state["risk_date"] = local_date
+        state["daily_realized_pnl_usdt"] = 0
+        if not state.get("positions"):
+            state["daily_open_risk_usdt"] = 0
+    dates = state.get("planned_trading_dates", [])
+    if local_date in dates:
+        state["trading_day_index"] = dates.index(local_date) + 1
     state["last_run"] = {
         "run_id": run_id,
         "timestamp": now.isoformat(),
@@ -147,10 +172,7 @@ def write_records(run_id, decision, result, now):
         "paper_action": decision["action"],
         "paper_result": result["status"],
     }
-    state["next_task_focus"] = (
-        "Refresh market evidence and reassess the local paper position at the next scheduled Central-time check. "
-        "Live trading remains disabled."
-    )
+    state["next_task_focus"] = "下一次定时检查时更新市场证据，并重新评估模拟持仓或空仓状态；真实交易继续禁用。"
     atomic_json(ROOT / "05-交易记录-data" / "current-state.json", state)
     evidence = {
         "run_id": run_id,
@@ -161,26 +183,28 @@ def write_records(run_id, decision, result, now):
         "result": result,
         "state": {key: state.get(key) for key in ("cash_usdt", "equity_usdt", "positions", "daily_open_risk_usdt")},
     }
-    atomic_json(ROOT / "05-交易记录-data" / "evidence" / (run_id + ".json"), evidence)
-    journal_path = ROOT / "05-交易记录-data" / "journal" / (local.date().isoformat() + ".md")
+    atomic_json(ROOT / "05-交易记录-data" / "证据资料-evidence" / (run_id + ".json"), evidence)
+    journal_path = ROOT / "05-交易记录-data" / "运行日志-journal" / (local_date + ".md")
     action = decision["action"]
     event = result.get("event") or {}
+    action_zh = {"open_long": "模拟买入", "manage": "持仓管理", "close": "模拟卖出", "no_trade": "不交易"}[action]
     lines = [
-        "", "## autonomous_paper_" + run_id + " - " + now.isoformat(), "",
-        "- What was done: Autonomous local paper decision processed: " + action + ".",
-        "- Why it was done: The user authorized autonomous paper-trading decisions within the documented risk limits.",
-        "- Order proposed: " + ("Yes" if action == "open_long" else "No") + ".",
-        "- Order placed: No real order; local paper ledger only.",
-        "- Order filled: " + ("Yes, simulated locally." if event else "No."),
-        "- Current holdings: " + json.dumps(state.get("positions", []), ensure_ascii=False) + ".",
-        "- Current cash: " + str(state.get("cash_usdt")) + " USDT paper cash.",
-        "- Current risk: " + str(state.get("daily_open_risk_usdt")) + " USDT open risk.",
-        "- Evidence captured: `05-交易记录-data/evidence/" + run_id + ".json`.",
-        "- Next task focus: Refresh read-only quote and reassess the paper position or no-trade state.",
-        "- Human confirmations needed: None for local paper trading; live trading remains disabled.",
+        "", "## 自动模拟交易：" + run_id + " - " + now.isoformat(), "",
+        "- 本次做了什么：处理了一次本地模拟交易决策，结果为“" + action_zh + "”。",
+        "- 为什么这么做：用户已授权系统在书面风险限制内自主进行模拟交易判断。",
+        "- 是否提出订单：" + ("是，仅模拟买入" if action == "open_long" else "否") + "。",
+        "- 是否真实下单：否，只写入本地模拟账本。",
+        "- 是否成交：" + ("是，本地模拟成交" if event else "否") + "。",
+        "- 当前持仓：" + json.dumps(state.get("positions", []), ensure_ascii=False) + "。",
+        "- 当前模拟现金：" + str(state.get("cash_usdt")) + " USDT。",
+        "- 当前未平仓风险：" + str(state.get("daily_open_risk_usdt")) + " USDT。",
+        "- 证据文件：`05-交易记录-data/证据资料-evidence/" + run_id + ".json`。",
+        "- 下一次重点：刷新只读行情，重新评估模拟持仓或空仓状态。",
+        "- 需要人工确认：模拟交易不需要；真实交易继续禁用。",
     ]
     with journal_path.open("a", encoding="utf-8") as file:
         file.write("\n".join(lines) + "\n")
+    write_daily_report(local_date, ROOT)
 
 
 def main():
